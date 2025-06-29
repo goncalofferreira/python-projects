@@ -47,9 +47,36 @@ INSTALLED_APPS = [
 
 
 REST_FRAMEWORK = {
+    #JWT
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-    )
+    ),
+    
+    #Pagination
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 5,  # número de itens por página
+    
+    #Limite de Requests
+    'DEFAULT_THROTTLE_CLASSES': [
+        'rest_framework.throttling.UserRateThrottle',
+        'rest_framework.throttling.AnonRateThrottle', # Throttling por IP 
+    ],
+    'DEFAULT_THROTTLE_RATES': {
+        'user': '100/day',    # autenticado: Maximo de 100 requisições por dia.
+        'anon': '20/day' ,    # não autenticado
+
+        # Custom
+        'burst': '10/minute',
+        'sustained': '100/day',
+        
+        'anon_burst': '10/minute',
+        'anon_sustained': '100/day',
+
+        'create_book': '5/hour',
+        'update_book': '10/hour',
+        'delete_book': '5/hour',
+        'create_category': '10/day',
+    }
 }
 
 

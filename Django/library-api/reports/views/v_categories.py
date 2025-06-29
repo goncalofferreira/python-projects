@@ -9,6 +9,7 @@ from ..views import *
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
+@throttle_classes([CreateCategoryThrottle])
 def criar_categorias(request):
     serializer = CriarCategoriasSerializer(data=request.data)
     if serializer.is_valid():

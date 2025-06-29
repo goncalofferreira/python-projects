@@ -15,6 +15,11 @@ class CriarLivrosSerializer(serializers.Serializer):
     titulo = serializers.CharField(max_length=255)
     categoria_id = serializers.IntegerField()
 
+    def validate_titulo(self, value):
+        if "test" in value.lower():
+            raise serializers.ValidationError("Book title cannot contain the word 'test'")
+        return value
+
 class CategoriasSerializer(serializers.Serializer):
     id = serializers.IntegerField()
     nome = serializers.CharField()    
